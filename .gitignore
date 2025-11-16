@@ -39,6 +39,7 @@
 
 # debug information files
 *.dwo
+<<<<<<< HEAD
 
 build/
 *.o
@@ -48,3 +49,5 @@ build/
 *.pro.user
 *.qmake.stash
 *.ninja*
+=======
+>>>>>>> ce19559 (Initial commit)
