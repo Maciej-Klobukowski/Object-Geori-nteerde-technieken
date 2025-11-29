@@ -1,3 +1,0 @@
-C:/Users/Maciej/Documents/Object-Geori-nteerde-technieken/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/ObjectGeorienteerdeTechnieken.dir
-C:/Users/Maciej/Documents/Object-Geori-nteerde-technieken/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/Maciej/Documents/Object-Geori-nteerde-technieken/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
