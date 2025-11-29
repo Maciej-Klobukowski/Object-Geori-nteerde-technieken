@@ -39,3 +39,12 @@
 
 # debug information files
 *.dwo
+
+build/
+*.o
+*.obj
+*.exe
+*.user
+*.pro.user
+*.qmake.stash
+*.ninja*
