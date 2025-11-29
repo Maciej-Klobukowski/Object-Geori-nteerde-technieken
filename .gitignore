@@ -39,8 +39,7 @@
 
 # debug information files
 *.dwo
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 build/
 *.o
@@ -50,7 +49,52 @@ build/
 *.pro.user
 *.qmake.stash
 *.ninja*
-=======
->>>>>>> ce19559 (Initial commit)
-=======
->>>>>>> ce19559 (Initial commit)
+
+# Qt Creator / Qt build artifacts
+*.pro.user
+*.qmake.stash
+*.qmake.cache
+*.qmlproject.user
+*.creator.user
+*.autosave
+*.user
+*.user.*
+*.pro.user.*
+
+# Build directories
+build-*/
+build/
+bin/
+obj/
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+*.exe
+
+# CMake build
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+CTestTestfile.cmake
+Testing/
+
+# Qt generated files
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.moc
+*.qrc
+*.ui.h
+
+# IDE / editor specific
+.vscode/
+*.swp
+*.swo
+*.DS_Store
+*.i*
