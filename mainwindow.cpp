@@ -2,6 +2,9 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
+     // Uses the parameterized constructors
+    circle(30, "Big Circle"),
+    rect(40, 20, "Custom Rectangle")
 {
     setWindowTitle("OOP Qt Example");
     resize(300, 200);

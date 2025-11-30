@@ -16,14 +16,37 @@ public:
      */
 
 
-    Rectangle() {
+    Rectangle() : width(20), height(10) {
         setName("Rectangle");
+    }
+
+    // Parameterized constructor #1
+    Rectangle(int w, int h) : width(w), height(h) {
+        setName("Rectangle");
+    }
+
+    // Parameterized constructor #2
+    Rectangle(int w, int h, const QString& customName)
+        : width(w), height(h)
+    {
+        setName(customName);
     }
 
     // Polymorphic override of abstract virtual method
     QString draw() const override {
         return "Drawing a Rectangle";
     }
-};
+
+    // Encapsulation
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+    void setSize(int w, int h) { width = w; height = h; }
+
+    private:
+        int width;
+        int height;
+    };
+
+
 
 #endif // RECTANGLE_H
