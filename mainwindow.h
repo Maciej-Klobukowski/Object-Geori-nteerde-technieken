@@ -32,6 +32,7 @@ private slots:
 private:
     QLabel* label;
 
+    //Vraag 8 useful and correct object composition
 
     /*
      * OBJECT COMPOSITION:

@@ -9,6 +9,13 @@
  */
 class Rectangle : public Shape {
 public:
+
+    /*
+     * DEFAULT CONSTRUCTOR #2
+     * Useful and correct—ensures the class can be instantiated with no arguments.
+     */
+
+
     Rectangle() {
         setName("Rectangle");
     }

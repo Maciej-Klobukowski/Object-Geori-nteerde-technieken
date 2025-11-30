@@ -4,6 +4,8 @@
 #include "shape.h"
 
 /*
+ * Vraag 6 useful and correct inheritance
+ *
  * INHERITANCE:
  * Circle correctly inherits from Shape because a Circle IS-A Shape.
  *
@@ -12,6 +14,12 @@
  */
 class Circle : public Shape {
 public:
+
+    /*
+     * DEFAULT CONSTRUCTOR #1
+     * Useful and correct: allows creating a Circle even when no initial
+     * configuration is provided.
+    */
     Circle() {
         setName("Circle"); // encapsulation through setter
     }

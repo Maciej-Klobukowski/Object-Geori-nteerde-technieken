@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::drawCircle() {
     /*
+     * vraag 7 useful and correct polymorphism + vraag 8 useful and correct object composition
+     *
      * COMPOSITION + POLYMORPHISM:
      * DrawingTool uses a Shape* (Circle here).
      * draw() calls the correct overridden version at runtime.

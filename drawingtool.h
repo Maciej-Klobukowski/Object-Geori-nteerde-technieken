@@ -4,7 +4,7 @@
 #include "shape.h"
 
 
-//Vraag 8 useful and correct object composition (explain why)
+//Vraag 8 useful and correct object composition
 
 /*
  * OBJECT COMPOSITION:
