@@ -20,8 +20,18 @@ public:
      * Useful and correct: allows creating a Circle even when no initial
      * configuration is provided.
     */
-    Circle() {
-        setName("Circle"); // encapsulation through setter
+    Circle() : radius(10) {
+        setName("Circle");
+    }
+
+    // Parameterized constructor #1
+    Circle(int r) : radius(r) {
+        setName("Circle");
+    }
+
+    // Parameterized constructor #2
+    Circle(int r, const QString& customName) : radius(r) {
+        setName(customName);
     }
 
     /*
@@ -30,8 +40,16 @@ public:
      * When referenced through a Shape*, this version will be called for circles.
      */
     QString draw() const override {
-        return "Drawing a Circle";
+        return QString("Drawing a Circle with radius %1").arg(radius);
     }
+
+    // Encapsulation
+    int getRadius() const { return radius; }
+    void setRadius(int r) { radius = r; }
+
+    private:
+       int radius;
+
 };
 
 #endif // CIRCLE_H
