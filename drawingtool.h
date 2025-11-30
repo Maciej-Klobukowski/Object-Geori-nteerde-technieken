@@ -3,6 +3,9 @@
 
 #include "shape.h"
 
+
+//Vraag 8 useful and correct object composition (explain why)
+
 /*
  * OBJECT COMPOSITION:
  * DrawingTool HAS A Shape pointer.

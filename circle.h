@@ -26,12 +26,5 @@ public:
     }
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#endif // CIRCLE_HRCLE_H
-=======
 #endif // CIRCLE_H
->>>>>>> 8112410 (Implement Circle class inheriting from Shape)
-=======
-#endif // CIRCLE_H
->>>>>>> 8112410 (Implement Circle class inheriting from Shape)
+
