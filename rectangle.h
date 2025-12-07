@@ -16,18 +16,28 @@ public:
      */
 
 
-    Rectangle() : width(20), height(10) {
+    Rectangle()
+        : Shape()
+        , width(20)
+        , height(10)
+    {
         setName("Rectangle");
     }
+
 
     // Parameterized constructor #1
-    Rectangle(int w, int h) : width(w), height(h) {
+    Rectangle(int w, int h)
+        : Shape()
+        , width(w)
+        , height(h)
+    {
         setName("Rectangle");
     }
-
     // Parameterized constructor #2
     Rectangle(int w, int h, const QString& customName)
-        : width(w), height(h)
+        : Shape()
+        , width(w)
+        , height(h)
     {
         setName(customName);
     }

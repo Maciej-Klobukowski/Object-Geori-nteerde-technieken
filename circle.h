@@ -20,17 +20,26 @@ public:
      * Useful and correct: allows creating a Circle even when no initial
      * configuration is provided.
     */
-    Circle() : radius(10) {
+    Circle()
+        : Shape()        // base class init
+        , radius(10)     // member initialization list
+    {
         setName("Circle");
     }
 
     // Parameterized constructor #1
-    Circle(int r) : radius(r) {
+    Circle(int r)
+        : Shape()        // base class init
+        , radius(r)
+    {
         setName("Circle");
     }
 
     // Parameterized constructor #2
-    Circle(int r, const QString& customName) : radius(r) {
+    Circle(int r, const QString& customName)
+        : Shape()
+        , radius(r)
+    {
         setName(customName);
     }
 
