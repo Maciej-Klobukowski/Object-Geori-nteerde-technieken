@@ -35,6 +35,31 @@ public:
     }
 
     /*
+     * COPY CONSTRUCTOR #1 (standard copy)
+     * Useful & correct because it safely copies all encapsulated data
+     * including the Shape's name and the radius of this Circle.
+     */
+    Circle(const Circle& other)
+        : Shape(other)        // calls base class copy
+        , radius(other.radius)
+    {
+        setName(other.getName());
+    }
+
+    /*
+     * COPY CONSTRUCTOR #2 (copy + modified name)
+     * Demonstrates an alternative copy style where a copied object
+     * can have adjusted metadata while still copying core values.
+     */
+    Circle(const Circle& other, const QString& newName)
+        : Shape(other)
+        , radius(other.radius)
+    {
+        setName(newName);
+    }
+
+
+    /*
      * POLYMORPHISM:
      * This overrides Shape::draw().
      * When referenced through a Shape*, this version will be called for circles.

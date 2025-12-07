@@ -32,6 +32,32 @@ public:
         setName(customName);
     }
 
+    /*
+     * COPY CONSTRUCTOR #1 (standard)
+     * Useful & correct because it fully copies internal state while keeping
+     * encapsulation intact and properly copying base class data.
+     */
+    Rectangle(const Rectangle& other)
+        : Shape(other)
+        , width(other.width)
+        , height(other.height)
+    {
+        setName(other.getName());
+    }
+
+    /*
+     * COPY CONSTRUCTOR #2 (copy with new name)
+     * Demonstrates extended flexibility: copying dimensions but assigning
+     * a different human-readable identifier.
+     */
+    Rectangle(const Rectangle& other, const QString& newName)
+        : Shape(other)
+        , width(other.width)
+        , height(other.height)
+    {
+        setName(newName);
+    }
+
     // Polymorphic override of abstract virtual method
     QString draw() const override {
         return "Drawing a Rectangle";
