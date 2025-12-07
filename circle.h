@@ -68,6 +68,17 @@ public:
         return QString("Drawing a Circle with radius %1").arg(radius);
     }
 
+    /*
+     * DESTRUCTOR
+     * Dit is destructor #1 van het totale programma.
+     * Wordt automatisch uitgevoerd wanneer een Circle-object wordt verwijderd.
+     */
+    ~Circle() {
+        // Geen echte resources, maar nuttig voor demonstratie.
+        // Bijvoorbeeld logging:
+        // qDebug() << "Circle destroyed";
+    }
+
     // Encapsulation
     int getRadius() const { return radius; }
     void setRadius(int r) { radius = r; }

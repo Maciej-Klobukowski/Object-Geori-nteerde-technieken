@@ -58,6 +58,17 @@ public:
         setName(newName);
     }
 
+    /*
+     * DESTRUCTOR
+     * Dit is destructor #2 van het totale project.
+     * Wederom nuttig voor cleanup of logging.
+     */
+    ~Rectangle() {
+        // Bijvoorbeeld logging:
+        // qDebug() << "Rectangle destroyed";
+    }
+
+
     // Polymorphic override of abstract virtual method
     QString draw() const override {
         return "Drawing a Rectangle";
