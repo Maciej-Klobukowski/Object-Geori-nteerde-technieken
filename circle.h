@@ -3,99 +3,46 @@
 
 #include "shape.h"
 
-/*
- * Vraag 6 useful and correct inheritance
- *
- * INHERITANCE:
- * Circle correctly inherits from Shape because a Circle IS-A Shape.
- *
- * This demonstrates useful and correct inheritance:
- * shared behavior is reused, and only unique behavior is added.
- */
 class Circle : public Shape {
 public:
 
-    /*
-     * DEFAULT CONSTRUCTOR #1
-     * Useful and correct: allows creating a Circle even when no initial
-     * configuration is provided.
-    */
+    // Default constructor → forwarded naar constructor(#2)
     Circle()
-        : Shape()        // base class init
-        , radius(10)     // member initialization list
-    {
-        setName("Circle");
-    }
+        : Circle(10, "Circle")   // forwarding
+    {}
 
-    // Parameterized constructor #1
+    // Parameterized constructor #1 → forwarded naar constructor(#2)
     Circle(int r)
-        : Shape()        // base class init
-        , radius(r)
-    {
-        setName("Circle");
-    }
+        : Circle(r, "Circle")    // forwarding
+    {}
 
-    // Parameterized constructor #2
+    // Parameterized constructor #2 (eindpunt)
     Circle(int r, const QString& customName)
-        : Shape()
-        , radius(r)
+        : Shape(), radius(r)
     {
         setName(customName);
     }
 
-    /*
-     * COPY CONSTRUCTOR #1 (standard copy)
-     * Useful & correct because it safely copies all encapsulated data
-     * including the Shape's name and the radius of this Circle.
-     */
+    // Copy constructor #1 → forwarded
     Circle(const Circle& other)
-        : Shape(other)        // calls base class copy
-        , radius(other.radius)
-    {
-        setName(other.getName());
-    }
+        : Circle(other.radius, other.getName())   // forwarding
+    {}
 
-    /*
-     * COPY CONSTRUCTOR #2 (copy + modified name)
-     * Demonstrates an alternative copy style where a copied object
-     * can have adjusted metadata while still copying core values.
-     */
+    // Copy constructor #2 (copy + rename)
     Circle(const Circle& other, const QString& newName)
-        : Shape(other)
-        , radius(other.radius)
+        : Shape(other), radius(other.radius)
     {
         setName(newName);
     }
 
+    ~Circle() {}
 
-    /*
-     * POLYMORPHISM:
-     * This overrides Shape::draw().
-     * When referenced through a Shape*, this version will be called for circles.
-     */
     QString draw() const override {
         return QString("Drawing a Circle with radius %1").arg(radius);
     }
 
-    /*
-     * DESTRUCTOR
-     * Dit is destructor #1 van het totale programma.
-     * Wordt automatisch uitgevoerd wanneer een Circle-object wordt verwijderd.
-     */
-    ~Circle() {
-        // Geen echte resources, maar nuttig voor demonstratie.
-        // Bijvoorbeeld logging:
-        // qDebug() << "Circle destroyed";
-    }
-
-    // Encapsulation
-    int getRadius() const { return radius; }
-    void setRadius(int r) { radius = r; }
-
-    private:
-       int radius;
-
+private:
+    int radius;
 };
 
 #endif // CIRCLE_H
-

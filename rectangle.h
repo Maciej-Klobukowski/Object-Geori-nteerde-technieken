@@ -3,97 +3,48 @@
 
 #include "shape.h"
 
-/*
- * INHERITANCE:
- * Rectangle inherits correctly from Shape, modeling a proper IS-A relationship.
- */
 class Rectangle : public Shape {
 public:
 
-    /*
-     * DEFAULT CONSTRUCTOR #2
-     * Useful and correct—ensures the class can be instantiated with no arguments.
-     */
-
-
+    // Default constructor → forwarded
     Rectangle()
-        : Shape()
-        , width(20)
-        , height(10)
-    {
-        setName("Rectangle");
-    }
+        : Rectangle(20, 10, "Rectangle")    // forwarding
+    {}
 
-
-    // Parameterized constructor #1
+    // Parameterized constructor #1 → forwarded
     Rectangle(int w, int h)
-        : Shape()
-        , width(w)
-        , height(h)
-    {
-        setName("Rectangle");
-    }
-    // Parameterized constructor #2
+        : Rectangle(w, h, "Rectangle")      // forwarding
+    {}
+
+    // Parameterized constructor #2 (eindpunt)
     Rectangle(int w, int h, const QString& customName)
-        : Shape()
-        , width(w)
-        , height(h)
+        : Shape(), width(w), height(h)
     {
         setName(customName);
     }
 
-    /*
-     * COPY CONSTRUCTOR #1 (standard)
-     * Useful & correct because it fully copies internal state while keeping
-     * encapsulation intact and properly copying base class data.
-     */
+    // Copy constructor #1 → forwarded
     Rectangle(const Rectangle& other)
-        : Shape(other)
-        , width(other.width)
-        , height(other.height)
-    {
-        setName(other.getName());
-    }
+        : Rectangle(other.width, other.height, other.getName())
+    {}
 
-    /*
-     * COPY CONSTRUCTOR #2 (copy with new name)
-     * Demonstrates extended flexibility: copying dimensions but assigning
-     * a different human-readable identifier.
-     */
+    // Copy constructor #2 (copy + renamed)
     Rectangle(const Rectangle& other, const QString& newName)
-        : Shape(other)
-        , width(other.width)
-        , height(other.height)
+        : Shape(other), width(other.width), height(other.height)
     {
         setName(newName);
     }
 
-    /*
-     * DESTRUCTOR
-     * Dit is destructor #2 van het totale project.
-     * Wederom nuttig voor cleanup of logging.
-     */
-    ~Rectangle() {
-        // Bijvoorbeeld logging:
-        // qDebug() << "Rectangle destroyed";
-    }
+    ~Rectangle() {}
 
-
-    // Polymorphic override of abstract virtual method
     QString draw() const override {
-        return "Drawing a Rectangle";
+        return QString("Drawing a Rectangle %1x%2")
+        .arg(width).arg(height);
     }
 
-    // Encapsulation
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
-    void setSize(int w, int h) { width = w; height = h; }
-
-    private:
-        int width;
-        int height;
-    };
-
-
+private:
+    int width;
+    int height;
+};
 
 #endif // RECTANGLE_H
