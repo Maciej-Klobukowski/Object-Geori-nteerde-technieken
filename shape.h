@@ -51,6 +51,11 @@ public:
      */
     virtual QString draw() const = 0;
 
+    // ✅ Useful member function
+    QString describe() const {
+        return "This shape is called: " + name;
+    }
+
     // Useful and correct encapsulation: controlled access to 'name'
     void setName(const QString& n) { name = n; }
     QString getName() const { return name; }
@@ -58,5 +63,6 @@ public:
 protected:
     QString name; // Only derived classes can access
 };
+
 
 #endif // SHAPE_H

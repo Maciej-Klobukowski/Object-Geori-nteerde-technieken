@@ -37,11 +37,23 @@ void MainWindow::drawCircle() {
      * DrawingTool uses a Shape* (Circle here).
      * draw() calls the correct overridden version at runtime.
      */
+
+
     DrawingTool tool(&circle);
+
+    label->setText(
+        tool.performDraw() + "\n" + circle.describe()
+        );
+
     label->setText(tool.performDraw());
 }
 
 void MainWindow::drawRectangle() {
     DrawingTool tool(&rect);
+
+    label->setText(
+        tool.performDraw() + "\n" + rect.describe()
+        );
+
     label->setText(tool.performDraw());
 }
