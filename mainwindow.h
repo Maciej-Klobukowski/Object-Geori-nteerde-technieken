@@ -24,6 +24,8 @@ public:
 
     explicit MainWindow(QWidget *parent = nullptr);
 
+private:
+    void drawShape(Shape* s); // helper for dynamic polymorphism
 
 private slots:
     void drawCircle();

@@ -21,6 +21,14 @@ MainWindow::MainWindow(QWidget *parent)
     label->setGeometry(20, 100, 260, 40);
 }
 
+// New helper function demonstrating useful dynamic polymorphism
+void MainWindow::drawShape(Shape* s) {
+    // Dynamic polymorphism: the correct draw() is called at runtime
+    DrawingTool tool(s);
+    label->setText(tool.performDraw());
+}
+
+
 void MainWindow::drawCircle() {
     /*
      * vraag 7 useful and correct polymorphism + vraag 8 useful and correct object composition
