@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::drawShape(Shape* s) {
     // Dynamic polymorphism: the correct draw() is called at runtime
     DrawingTool tool(s);
-    label->setText(tool.performDraw());
+    this->label->setText(s->draw());
 }
 
 
