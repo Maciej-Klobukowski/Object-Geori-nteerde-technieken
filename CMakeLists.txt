@@ -19,6 +19,7 @@ qt_add_executable(ObjectGeorienteerdeTechnieken
     LICENSE.txt
     README.md
     .gitignore
+    shape.cpp
 )
 
 target_link_libraries(ObjectGeorienteerdeTechnieken

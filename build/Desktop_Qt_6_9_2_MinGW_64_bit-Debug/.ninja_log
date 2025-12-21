@@ -1,12 +1,4 @@
 # ninja log v6
-18	31	7861263577778578	clean	577b940aee94fbd7
-36	2491	7861263579082919	CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj	29812c9c6a42d652
-29	2599	7861263579006521	CMakeFiles/ObjectGeorienteerdeTechnieken.dir/main.cpp.obj	c3a7ea690b9149eb
-24	39	7862167227328064	clean	577b940aee94fbd7
-33	48	7862167254930091	clean	577b940aee94fbd7
-22	37	7862168772196625	clean	577b940aee94fbd7
 35	50	7862168826742828	clean	577b940aee94fbd7
-40	3222	7862168828215520	CMakeFiles/ObjectGeorienteerdeTechnieken.dir/main.cpp.obj	c3a7ea690b9149eb
-49	3232	7862168828302779	CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj	29812c9c6a42d652
 102	5253	7862177250493792	CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj	29812c9c6a42d652
 90	5370	7862177250378595	CMakeFiles/ObjectGeorienteerdeTechnieken.dir/main.cpp.obj	c3a7ea690b9149eb

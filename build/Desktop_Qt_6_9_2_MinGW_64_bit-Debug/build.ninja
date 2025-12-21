@@ -65,6 +65,14 @@ build CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj: CXX_COMPI
   OBJECT_DIR = CMakeFiles\ObjectGeorienteerdeTechnieken.dir
   OBJECT_FILE_DIR = CMakeFiles\ObjectGeorienteerdeTechnieken.dir
 
+build CMakeFiles/ObjectGeorienteerdeTechnieken.dir/shape.cpp.obj: CXX_COMPILER__ObjectGeorienteerdeTechnieken_unscanned_Debug C$:/Users/Maciej/Documents/Object-Geori-nteerde-technieken/shape.cpp || cmake_object_order_depends_target_ObjectGeorienteerdeTechnieken
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\ObjectGeorienteerdeTechnieken.dir\shape.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/Qt/6.9.2/mingw_64/include/QtCore -isystem C:/Qt/6.9.2/mingw_64/include -isystem C:/Qt/6.9.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.2/mingw_64/include/QtGui -isystem C:/Qt/6.9.2/mingw_64/include/QtWidgets
+  OBJECT_DIR = CMakeFiles\ObjectGeorienteerdeTechnieken.dir
+  OBJECT_FILE_DIR = CMakeFiles\ObjectGeorienteerdeTechnieken.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ObjectGeorienteerdeTechnieken
@@ -73,7 +81,7 @@ build CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj: CXX_COMPI
 #############################################
 # Link the executable ObjectGeorienteerdeTechnieken.exe
 
-build ObjectGeorienteerdeTechnieken.exe: CXX_EXECUTABLE_LINKER__ObjectGeorienteerdeTechnieken_Debug CMakeFiles/ObjectGeorienteerdeTechnieken.dir/main.cpp.obj CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj | C$:/Qt/6.9.2/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.2/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.2/mingw_64/lib/libQt6Core.a
+build ObjectGeorienteerdeTechnieken.exe: CXX_EXECUTABLE_LINKER__ObjectGeorienteerdeTechnieken_Debug CMakeFiles/ObjectGeorienteerdeTechnieken.dir/main.cpp.obj CMakeFiles/ObjectGeorienteerdeTechnieken.dir/mainwindow.cpp.obj CMakeFiles/ObjectGeorienteerdeTechnieken.dir/shape.cpp.obj | C$:/Qt/6.9.2/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.2/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.2/mingw_64/lib/libQt6Core.a
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = C:/Qt/6.9.2/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.9.2/mingw_64/lib/libQt6Gui.a  C:/Qt/6.9.2/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ObjectGeorienteerdeTechnieken.dir
