@@ -49,16 +49,18 @@ public:
      * When draw() is called through a Shape pointer, the correct subclass
      * implementation is invoked at runtime.
      */
-    virtual QString draw() const = 0;
-
-    // 🔹 default value in function definition (header)
     QString describe(bool includeType = true) const;
+
+    // 🔹 useful member variable access
+    void setVisible(bool v) { visible = v; }
+    bool isVisible() const { return visible; }
 
     void setName(const QString& n) { name = n; }
     QString getName() const { return name; }
 
 protected:
     QString name; // Only derived classes can access
+    bool visible = true;   // ✅ useful member variable
 };
 
 
