@@ -2,31 +2,22 @@
 
 namespace oop {
 
+// vraag 26: friend function
 QString inspectShape(const Shape& s) {
-    return QString(
-               "Shape[name=%1, visible=%2, selected=%3, locked=%4, highlighted=%5, dirty=%6]"
-               )
-        .arg(s.name)
-        .arg(s.visible ? "true" : "false")
-        .arg(s.selected ? "true" : "false")
-        .arg(s.locked ? "true" : "false")
-        .arg(s.highlighted ? "true" : "false")
-        .arg(s.dirty ? "true" : "false");
+    return "Shape[" % s.name % "]";
 }
 
+// vraag 35: useful string class usage (QStringBuilder)
 QString Shape::describe(bool includeType) const {
-    if (!visible) {
-        return "Shape is hidden";
-    }
+    if (!visible) return "Hidden";
 
-    QString result = includeType ? "Shape name: " + name : name;
+    QString out = includeType ? ("Shape: " % name) : name;
 
-    if (selected)    result += " [selected]";
-    if (locked)      result += " [locked]";
-    if (highlighted) result += " [highlighted]";
-    if (dirty)       result += " [dirty]";
+    if (selected) out = out % " [selected]";
+    if (locked)   out = out % " [locked]";
+    if (dirty)    out = out % " [dirty]";
 
-    return result;
+    return out;
 }
 
-} // namespace oop
+}

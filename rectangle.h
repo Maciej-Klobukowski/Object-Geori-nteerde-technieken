@@ -5,41 +5,32 @@
 
 namespace oop {
 
-/*
- * vraag 27: class inside self-made namespace
- */
 class Rectangle : public Shape {
 public:
-    Rectangle() : Rectangle(20, 10, "Rectangle") {}
+    // vraag 12
+    Rectangle() : Rectangle(10, 5, "Rectangle") {}
+
+    // vraag 13
     Rectangle(int w, int h) : Rectangle(w, h, "Rectangle") {}
 
-    Rectangle(int w, int h, const QString& customName)
-        : Shape(), width(w), height(h)
+    // vraag 16
+    Rectangle(int w, int h, const QString& n)
+        : width(w), height(h)
     {
-        setName(customName);
+        setName(n);
     }
 
-    Rectangle(const Rectangle& other)
-        : Rectangle(other.width, other.height, other.getName())
-    {}
+    // vraag 14
+    Rectangle(const Rectangle& r)
+        : Rectangle(r.width, r.height, r.getName()) {}
 
-    Rectangle(const Rectangle& other, const QString& newName)
-        : Shape(other), width(other.width), height(other.height)
-    {
-        setName(newName);
-    }
-
-    ~Rectangle() {}
+    ~Rectangle() {} // vraag 15
 
     QString draw() const override {
-        return QString("Drawing a Rectangle %1x%2")
-        .arg(width).arg(height);
+        return "Drawing Rectangle " %
+               QString::number(width) % "x" %
+               QString::number(height);
     }
-
-    inline int getWidth() const { return width; }
-    inline int getHeight() const { return height; }
-    inline void setWidth(int w) { width = w; }
-    inline void setHeight(int h) { height = h; }
 
 private:
     int width;
@@ -48,4 +39,4 @@ private:
 
 } // namespace oop
 
-#endif // RECTANGLE_H
+#endif

@@ -2,11 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
 #include <QLabel>
 #include <QVector>
-#include <QFutureWatcher>
 #include <QTimer>
+#include <QFutureWatcher>
 
 #include "circle.h"
 #include "rectangle.h"
@@ -20,34 +19,22 @@ public:
     ~MainWindow();
 
 signals:
-    /*
-     * vraag 43: useful usage of signals/slots
-     * Wordt uitgezonden wanneer de actieve shape verandert.
-     */
-    void shapeChanged(const QString& description);
+    // vraag 43: signals/slots
+    void shapeChanged(const QString&);
 
 private slots:
     void drawCircle();
     void drawRectangle();
     void clearShape();
-    void drawAllShapes();
-    void saveLogToFileAsync();
-
-    // vraag 43: slot dat reageert op shapeChanged
-    void updateStatusLabel(const QString& text);
-
-    void clearStatusMessage();
+    void updateLabel(const QString&);
 
 private:
-    QLabel* label = nullptr;
+    QLabel* label = nullptr; // vraag 37: nullptr
 
-    void drawShape(oop::Shape* s);
+    oop::Shape* dynamicShape = nullptr; // vraag 32, 33
+    QVector<oop::Shape*> shapes;        // vraag 36
 
-    oop::Shape* dynamicShape = nullptr;
-    QVector<oop::Shape*> shapeList;
-
-    QFutureWatcher<bool> saveWatcher;
-    QTimer statusTimer;
+    QTimer timer;                       // vraag 42
 };
 
-#endif // MAINWINDOW_H
+#endif

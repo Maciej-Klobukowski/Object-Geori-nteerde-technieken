@@ -1,118 +1,62 @@
 #include "mainwindow.h"
-
-#include <QSaveFile>
-#include <QStandardPaths>
-#include <QDir>
-#include <QDateTime>
-#include <QTextStream>
-#include <QtConcurrent/QtConcurrentRun>
+#include <QtConcurrent>
+#include <QPushButton>
 #include <stdexcept>
-#include <new>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowTitle("OOP Qt Example");
-    resize(360, 240);
+    // vraag 47: GUI usage
+    resize(400, 300);
 
-    QPushButton* btnCircle = new QPushButton("Create Circle", this);
-    connect(btnCircle, &QPushButton::clicked, this, &MainWindow::drawCircle);
+    QPushButton* c = new QPushButton("Circle", this);
+    QPushButton* r = new QPushButton("Rectangle", this);
 
-    QPushButton* btnRect = new QPushButton("Create Rectangle", this);
-    connect(btnRect, &QPushButton::clicked, this, &MainWindow::drawRectangle);
+    label = new QLabel("Ready", this);
+    label->move(20, 200);
 
-    QPushButton* btnClear = new QPushButton("Delete Shape", this);
-    connect(btnClear, &QPushButton::clicked, this, &MainWindow::clearShape);
+    // vraag 19: usage of this
+    connect(c, &QPushButton::clicked, this, &MainWindow::drawCircle);
+    connect(r, &QPushButton::clicked, this, &MainWindow::drawRectangle);
 
-    QPushButton* btnAll = new QPushButton("Draw All", this);
-    connect(btnAll, &QPushButton::clicked, this, &MainWindow::drawAllShapes);
+    // vraag 40: lambda
+    connect(this, &MainWindow::shapeChanged, this,
+            [this](const QString& s) {
+                label->setText(s);
+            });
 
-    QPushButton* btnSaveAsync = new QPushButton("Save Log (Async)", this);
-    connect(btnSaveAsync, &QPushButton::clicked, this, &MainWindow::saveLogToFileAsync);
-
-    label = new QLabel("Click a button...", this);
-
-    shapeList.append(&circle);
-    shapeList.append(&rect);
-
-    /*
-     * vraag 43: useful signal/slot connection
-     * UI wordt automatisch geüpdatet wanneer shapeChanged wordt uitgezonden.
-     */
-    connect(this, &MainWindow::shapeChanged,
-            this, &MainWindow::updateStatusLabel);
-
-    statusTimer.setSingleShot(true);
-    statusTimer.setInterval(3000);
-    connect(&statusTimer, &QTimer::timeout,
-            this, &MainWindow::clearStatusMessage);
+    // vraag 42: QTimer
+    timer.setSingleShot(true);
 }
 
 MainWindow::~MainWindow() {
-    if (dynamicShape != nullptr) {
-        delete dynamicShape;
-        dynamicShape = nullptr;
-    }
-}
-
-void MainWindow::drawShape(oop::Shape* s) {
-    if (s == nullptr) {
-        emit shapeChanged("No shape to draw");
-        return;
-    }
-
-    oop::DrawingTool tool(s);
-    emit shapeChanged(tool.performDraw());
+    delete dynamicShape; // vraag 33
 }
 
 void MainWindow::drawCircle() {
     clearShape();
-    try {
-        dynamicShape = new oop::Circle(25, "Dynamic Circle");
-        drawShape(dynamicShape);
-    } catch (const std::bad_alloc&) {
-        emit shapeChanged("Out of memory while creating Circle");
-    }
+
+    // vraag 32: new
+    dynamicShape = new oop::Circle(20, "Dynamic Circle");
+
+    // vraag 18
+    oop::DrawingTool tool(dynamicShape);
+    emit shapeChanged(tool.performDraw());
 }
 
 void MainWindow::drawRectangle() {
     clearShape();
-    try {
-        dynamicShape = new oop::Rectangle(60, 30, "Dynamic Rectangle");
-        drawShape(dynamicShape);
-    } catch (const std::bad_alloc&) {
-        emit shapeChanged("Out of memory while creating Rectangle");
-    }
+    dynamicShape = new oop::Rectangle(30, 15, "Dynamic Rect");
+    emit shapeChanged(dynamicShape->draw());
 }
 
 void MainWindow::clearShape() {
-    if (dynamicShape != nullptr) {
+    if (dynamicShape != nullptr) { // vraag 37
         delete dynamicShape;
         dynamicShape = nullptr;
-        emit shapeChanged("Shape deleted");
     }
 }
 
-void MainWindow::drawAllShapes() {
-    QString out;
-    for (oop::Shape* s : shapeList) {
-        if (s != nullptr) {
-            out += s->draw() + "\n";
-        }
-    }
-    emit shapeChanged(out.trimmed());
+void MainWindow::updateLabel(const QString& t) {
+    label->setText(t);
 }
-
-/*
- * vraag 43: slot implementation
- * Ontvangt signal en update UI.
- */
-void MainWindow::updateStatusLabel(const QString& text) {
-    label->setText(text);
-    statusTimer.start();
-}
-
-void MainWindow::clearStatusMessage() {
-    label->clear();
-}
-

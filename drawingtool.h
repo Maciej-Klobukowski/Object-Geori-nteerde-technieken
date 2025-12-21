@@ -5,27 +5,26 @@
 
 namespace oop {
 
+// vraag 8: object composition
 class DrawingTool {
 public:
     DrawingTool(Shape* s) : shape(s) {}
 
+    // vraag 18: dynamic polymorphism
     QString performDraw() const {
         return shape->draw();
     }
-
-    // vraag 30: const reference for function (return const reference)
-    inline const Shape& getShape() const { return *shape; }
 
 private:
     Shape* shape;
 };
 
 // vraag 25: template function
-template <typename T>
-QString drawTemplate(const T& shape) {
-    return shape.draw();
+template<typename T>
+QString drawTemplate(const T& s) {
+    return s.draw();
 }
 
 } // namespace oop
 
-#endif // DRAWINGTOOL_H
+#endif

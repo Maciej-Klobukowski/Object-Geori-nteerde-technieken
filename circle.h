@@ -2,49 +2,38 @@
 #define CIRCLE_H
 
 #include "shape.h"
-#include <utility> // std::move
 
 namespace oop {
 
 class Circle : public Shape {
 public:
+    // vraag 12: default constructor
     Circle() : Circle(10, "Circle") {}
+
+    // vraag 13: parameterized constructor
     Circle(int r) : Circle(r, "Circle") {}
 
-    Circle(int r, const QString& customName)
-        : Shape(), radius(r)
-    {
-        setName(customName);
+    // vraag 16: member initialization list
+    Circle(int r, const QString& n) : radius(r) {
+        setName(n);
     }
 
-    /*
-     * vraag 34: 2 useful (modern) call-by-references
-     * Overload met rvalue reference zodat je bv. Circle(10, QString("X")) kan doen zonder copy.
-     */
-    Circle(int r, QString&& customName)   // #2 modern call-by-reference
-        : Shape(), radius(r)
-    {
-        setName(std::move(customName));
-    }
+    // vraag 14: copy constructor
+    Circle(const Circle& other) : Circle(other.radius, other.getName()) {}
 
-    Circle(const Circle& other)
-        : Circle(other.radius, other.getName())
-    {}
-
+    // vraag 17: constructor forwarding
     Circle(const Circle& other, const QString& newName)
-        : Shape(other), radius(other.radius)
+        : radius(other.radius)
     {
         setName(newName);
     }
 
-    ~Circle() {}
+    ~Circle() {} // vraag 15: destructor
 
+    // vraag 18: polymorphism
     QString draw() const override {
-        return QString("Drawing a Circle with radius %1").arg(radius);
+        return "Drawing Circle r=" % QString::number(radius);
     }
-
-    inline int getRadius() const { return radius; }
-    inline void setRadius(int r) { radius = r; }
 
 private:
     int radius;
@@ -52,4 +41,4 @@ private:
 
 } // namespace oop
 
-#endif // CIRCLE_H
+#endif
