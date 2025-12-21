@@ -5,14 +5,12 @@
 
 namespace oop {
 
-/*
- * vraag 27: class inside self-made namespace
- */
 class Circle : public Shape {
 public:
     Circle() : Circle(10, "Circle") {}
     Circle(int r) : Circle(r, "Circle") {}
 
+    // vraag 29: const reference (3)
     Circle(int r, const QString& customName)
         : Shape(), radius(r)
     {
@@ -23,6 +21,7 @@ public:
         : Circle(other.radius, other.getName())
     {}
 
+    // vraag 29: const reference (4)
     Circle(const Circle& other, const QString& newName)
         : Shape(other), radius(other.radius)
     {
