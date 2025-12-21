@@ -14,18 +14,21 @@ class MainWindow : public QMainWindow {
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow(); // vraag 32: destructor to clean up dynamic memory
+    ~MainWindow();
 
 private slots:
     void drawCircle();
     void drawRectangle();
+
+    // vraag 33: explicit dynamic memory removing
+    void clearShape();
 
 private:
     QLabel* label;
 
     void drawShape(oop::Shape* s);
 
-    // vraag 32: dynamic memory allocation (new)
+    // vraag 32 + 33: dynamically allocated object
     oop::Shape* dynamicShape;
 };
 
