@@ -23,14 +23,15 @@ private slots:
     void clearShape();
     void drawAllShapes();
 
+    // vraag 38: useful (modern) file-I/O
+    void saveLogToFile();
+
 private:
-    QLabel* label = nullptr; // vraag 37: nullptr for safe initialization
+    QLabel* label = nullptr;
 
     void drawShape(oop::Shape* s);
 
-    // vraag 37: pointer explicitly initialized to nullptr
     oop::Shape* dynamicShape = nullptr;
-
     QVector<oop::Shape*> shapeList;
 };
 
