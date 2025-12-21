@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QVector>
 
+#include <QFutureWatcher>   // vraag 41: threads (watch async task)
+
 #include "circle.h"
 #include "rectangle.h"
 #include "drawingtool.h"
@@ -23,8 +25,8 @@ private slots:
     void clearShape();
     void drawAllShapes();
 
-    // vraag 38: useful (modern) file-I/O
-    void saveLogToFile();
+    void saveLogToFile();          // bestaat al
+    void saveLogToFileAsync();     // vraag 41: threaded version
 
 private:
     QLabel* label = nullptr;
@@ -33,6 +35,10 @@ private:
 
     oop::Shape* dynamicShape = nullptr;
     QVector<oop::Shape*> shapeList;
+
+    // vraag 41: useful usage of threads
+    // Watcher voor QtConcurrent task (runs in thread pool)
+    QFutureWatcher<bool> saveWatcher;
 };
 
 #endif // MAINWINDOW_H

@@ -5,6 +5,9 @@
 #include <QDir>
 #include <QDateTime>
 #include <QTextStream>
+
+#include <QtConcurrent/QtConcurrentRun> // vraag 41: threads (QtConcurrent::run)
+
 #include <stdexcept>
 #include <new>
 
@@ -27,11 +30,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(btnAll, &QPushButton::clicked, this, &MainWindow::drawAllShapes);
 
     /*
-     * vraag 40: useful usage of lambda function
-     * Lambda wordt gebruikt als inline slot:
-     * - kort
-     * - lokaal
-     * - geen extra member function nodig
+     * vraag 41: useful usage of threads
+     * "Save Log (Async)" start file-I/O in a background thread so UI stays responsive.
+     */
+    QPushButton* btnSaveAsync = new QPushButton("Save Log (Async)", this);
+    connect(btnSaveAsync, &QPushButton::clicked, this, &MainWindow::saveLogToFileAsync);
+
+    /*
+     * vraag 40: lambda (blijft nuttig)
      */
     QPushButton* btnInfo = new QPushButton("Show Info", this);
     connect(btnInfo, &QPushButton::clicked, this, [this]() {
@@ -46,6 +52,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     shapeList.append(&circle);
     shapeList.append(&rect);
+
+    // vraag 41: wanneer background save klaar is -> UI update op main thread
+    connect(&saveWatcher, &QFutureWatcher<bool>::finished, this, [this]() {
+        const bool ok = saveWatcher.result();
+        label->setText(ok ? "Saved log (async)" : "Async save failed");
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -55,3 +67,107 @@ MainWindow::~MainWindow() {
     }
 }
 
+void MainWindow::drawShape(oop::Shape* s) {
+    if (s == nullptr) {
+        label->setText("No shape to draw");
+        return;
+    }
+    oop::DrawingTool tool(s);
+    label->setText(tool.performDraw());
+}
+
+void MainWindow::clearShape() {
+    if (dynamicShape != nullptr) {
+        delete dynamicShape;
+        dynamicShape = nullptr;
+        label->setText("Shape deleted");
+    } else {
+        label->setText("No shape to delete");
+    }
+}
+
+void MainWindow::drawCircle() {
+    clearShape();
+    try {
+        dynamicShape = new oop::Circle(25, "Dynamic Circle");
+        drawShape(dynamicShape);
+    } catch (const std::bad_alloc&) {
+        dynamicShape = nullptr;
+        label->setText("Out of memory while creating Circle");
+    }
+}
+
+void MainWindow::drawRectangle() {
+    clearShape();
+    try {
+        dynamicShape = new oop::Rectangle(60, 30, "Dynamic Rectangle");
+        drawShape(dynamicShape);
+    } catch (const std::bad_alloc&) {
+        dynamicShape = nullptr;
+        label->setText("Out of memory while creating Rectangle");
+    }
+}
+
+void MainWindow::drawAllShapes() {
+    QString out;
+    for (oop::Shape* s : shapeList) {
+        if (s != nullptr) {
+            out += s->draw() + "\n";
+        }
+    }
+    label->setText(out.trimmed());
+}
+
+/*
+ * vraag 41: useful usage of threads
+ * We nemen een "snapshot" (QString) op de main thread, en schrijven dat weg in een worker thread.
+ * Zo raken we geen UI vanuit de thread aan (thread-safe).
+ */
+void MainWindow::saveLogToFileAsync() {
+    // voorkom overlappende saves
+    if (saveWatcher.isRunning()) {
+        label->setText("Async save already running...");
+        return;
+    }
+
+    label->setText("Saving log in background...");
+
+    // snapshot van data (veilig om door te geven naar thread)
+    QString snapshot;
+    snapshot += "Shape log (" + QDateTime::currentDateTime().toString(Qt::ISODate) + ")\n\n";
+
+    for (oop::Shape* s : shapeList) {
+        if (s != nullptr) {
+            snapshot += s->describe() + "\n";
+            snapshot += s->draw() + "\n\n";
+        }
+    }
+
+    if (dynamicShape != nullptr) {
+        snapshot += "Dynamic shape:\n";
+        snapshot += dynamicShape->describe() + "\n";
+        snapshot += dynamicShape->draw() + "\n";
+    }
+
+    // achtergrond thread: file-I/O
+    auto future = QtConcurrent::run([snapshot]() -> bool {
+        const QString docs = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+        const QString dirPath = docs.isEmpty() ? QDir::homePath() : docs;
+
+        const QString fileName =
+            "shape_log_" + QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss") + ".txt";
+        const QString fullPath = QDir(dirPath).filePath(fileName);
+
+        QSaveFile file(fullPath);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            return false;
+        }
+
+        QTextStream out(&file);
+        out << snapshot;
+
+        return file.commit();
+    });
+
+    saveWatcher.setFuture(future);
+}
