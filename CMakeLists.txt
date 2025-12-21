@@ -20,6 +20,7 @@ qt_add_executable(ObjectGeorienteerdeTechnieken
     README.md
     .gitignore
     shape.cpp
+    TEST_PLAN.txt
 )
 
 target_link_libraries(ObjectGeorienteerdeTechnieken

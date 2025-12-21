@@ -1,0 +1,165 @@
+# TEST PLAN (Vraag 44: Test-Driven Development)
+
+Dit document beschrijft een eenvoudige test-aanpak (TDD-stijl) voor dit Qt/OOP project:
+- Eerst bepalen we **wat** moet werken (requirements)
+- Daarna definiëren we **test cases** met **verwacht resultaat**
+- Daarna implementeren we/valideren we de code
+
+---
+
+## 1) Scope
+
+We testen de kernfunctionaliteit:
+- Shapes (Circle/Rectangle) en hun `draw()` output
+- Polymorphism via `Shape*` + `DrawingTool`
+- Dynamische allocatie (`new`) + verwijderen (`delete`)
+- `nullptr` guards
+- Container iteratie (QVector)
+- File I/O (Save Log)
+- Exceptions (bad_alloc / file errors)
+- Threads (async save)
+- Signals/slots (UI update via `shapeChanged`)
+- Lambda usage (button action)
+
+---
+
+## 2) Test omgeving
+
+- OS: Windows/Linux/macOS
+- Qt versie: Qt 6.x of Qt 5.15+
+- Build: Debug
+- Start: project builden en runnen in Qt Creator
+
+---
+
+## 3) Test cases (manueel)
+
+### TC-01: Clean startup / app starts (Vraag 7/8)
+**Steps**
+1. Build project
+2. Run application
+**Expected**
+- App start zonder crash
+- MainWindow verschijnt
+- Label toont starttekst
+
+---
+
+### TC-02: Dynamic polymorphism via DrawingTool (Vraag 18)
+**Steps**
+1. Klik “Create Circle”
+2. Bekijk label
+3. Klik “Create Rectangle”
+4. Bekijk label
+**Expected**
+- Bij Circle: tekst bevat “Drawing a Circle …”
+- Bij Rectangle: tekst bevat “Drawing a Rectangle …”
+- Bewijs dat runtime dispatch werkt (Shape* → juiste draw())
+
+---
+
+### TC-03: Useful `this` usage (Vraag 19)
+**Steps**
+1. Start app
+2. Klik op knoppen
+**Expected**
+- Buttons reageren (connect werkt)
+- UI-elementen zijn zichtbaar en hebben parent ownership (geen crash/leaks in normaal gebruik)
+
+---
+
+### TC-04: Dynamic memory allocation + delete (Vraag 32/33)
+**Steps**
+1. Klik “Create Circle” (maakt dynamic shape)
+2. Klik “Delete Shape”
+3. Klik “Delete Shape” opnieuw
+**Expected**
+- Eerste delete: “Shape deleted”
+- Tweede delete: “No shape to delete”
+- Geen crash (delete + nullptr correct)
+
+---
+
+### TC-05: `nullptr` guards (Vraag 37)
+**Steps**
+1. Klik “Delete Shape” zonder eerst create
+2. Controleer label
+**Expected**
+- Label zegt “No shape to delete”
+- Geen crash
+
+---
+
+### TC-06: Container class (QVector) + Draw All (Vraag 36)
+**Steps**
+1. Klik “Draw All”
+2. Controleer label output
+**Expected**
+- Output bevat meerdere regels (Circle + Rectangle) via iteratie
+- Geen crash
+
+---
+
+### TC-07: File I/O Save Log (Vraag 38)
+**Steps**
+1. Klik “Save Log (Async)” of “Save Log”
+2. Zoek het aangemaakte bestand in Documents
+**Expected**
+- Er komt een `.txt` file met timestamp
+- File bevat describe() + draw() output van shapes
+
+---
+
+### TC-08: Exception handling bij file errors (Vraag 39)
+**Steps**
+1. Forceer file error (bv. Documents folder read-only of disk full simuleren)
+2. Klik Save Log
+**Expected**
+- Geen crash
+- Label toont “File error: …” of “Async save failed”
+
+---
+
+### TC-09: Threads (Vraag 41)
+**Steps**
+1. Klik “Save Log (Async)”
+2. Terwijl saving loopt: klik andere knoppen (Draw All / Create Circle)
+**Expected**
+- UI blijft responsief (geen freeze)
+- Na afloop status: “Saved log (async)” of “Async save failed”
+
+---
+
+### TC-10: Signals/Slots (Vraag 43)
+**Steps**
+1. Klik “Create Circle”
+2. Klik “Create Rectangle”
+3. Klik “Draw All”
+4. Observeer label updates
+**Expected**
+- Label update gebeurt via `shapeChanged` → `updateStatusLabel`
+- Elke actie verandert de labeltekst zonder directe label->setText calls in elke plek
+
+---
+
+### TC-11: Lambda usage (Vraag 40)
+**Steps**
+1. Klik “Show Info” (lambda-connected button)
+2. Klik eerst zonder dynamic shape, daarna na create
+**Expected**
+- Zonder dynamic shape: “No dynamic shape available”
+- Met dynamic shape: toont `describe()` output
+
+---
+
+## 4) Pass/Fail criteria
+
+- PASS = alle test cases geven verwacht resultaat en app crasht niet.
+- FAIL = crash, incorrecte tekst/output, file niet aangemaakt, UI freeze, of onjuiste delete/nullptr gedrag.
+
+---
+
+## 5) Notities
+
+- Deze testplan aanpak is TDD-style: requirements → tests → implementatie.
+- Later kan dit uitgebreid worden naar echte unit tests (QtTest) indien gevraagd.
