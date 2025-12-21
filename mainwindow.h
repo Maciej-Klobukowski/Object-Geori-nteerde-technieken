@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
-#include <QVector> // vraag 36: useful container class
+#include <QVector>
 
 #include "circle.h"
 #include "rectangle.h"
@@ -21,22 +21,16 @@ private slots:
     void drawCircle();
     void drawRectangle();
     void clearShape();
-
-    // vraag 36: use container class (iterate over multiple shapes)
     void drawAllShapes();
 
 private:
-    QLabel* label;
+    QLabel* label = nullptr; // vraag 37: nullptr for safe initialization
 
     void drawShape(oop::Shape* s);
 
-    oop::Shape* dynamicShape;
+    // vraag 37: pointer explicitly initialized to nullptr
+    oop::Shape* dynamicShape = nullptr;
 
-    /*
-     * vraag 36: useful container class
-     * QVector<oop::Shape*> houdt meerdere shapes bij om erover te itereren.
-     * Dit is nuttig om "Draw All" te kunnen doen.
-     */
     QVector<oop::Shape*> shapeList;
 };
 
