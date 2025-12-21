@@ -5,9 +5,6 @@
 
 namespace oop {
 
-/*
- * vraag 27: class inside namespace
- */
 class DrawingTool {
 public:
     DrawingTool(Shape* s) : shape(s) {}
@@ -16,13 +13,14 @@ public:
         return shape->draw();
     }
 
+    // vraag 30: const reference for function (return const reference)
+    inline const Shape& getShape() const { return *shape; }
+
 private:
     Shape* shape;
 };
 
-/*
- * vraag 25 + 27: template function inside namespace
- */
+// vraag 25: template function
 template <typename T>
 QString drawTemplate(const T& shape) {
     return shape.draw();

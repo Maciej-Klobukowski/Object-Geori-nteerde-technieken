@@ -15,6 +15,10 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+    // vraag 30: const references for functions (return const reference)
+    inline const oop::Circle& circleRef() const { return circle; }      // #3
+    inline const oop::Rectangle& rectRef() const { return rect; }       // #4
+
 private slots:
     void drawCircle();
     void drawRectangle();
@@ -24,7 +28,6 @@ private:
 
     void drawShape(oop::Shape* s);
 
-    // vraag 27: usage of namespace-qualified types
     oop::Circle circle;
     oop::Rectangle rect;
 };

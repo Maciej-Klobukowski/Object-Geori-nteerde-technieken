@@ -13,9 +13,11 @@ public:
 
     QString describe(bool includeType = true) const;
 
-    // vraag 29: const references (1)
+    // vraag 29: const reference for variable (parameter)
     inline void setName(const QString& n) { name = n; }
-    inline QString getName() const { return name; }
+
+    // vraag 30: const reference for function (return const reference)
+    inline const QString& getName() const { return name; }
 
     inline void setVisible(bool v) { visible = v; }
     inline bool isVisible() const { return visible; }
@@ -26,7 +28,7 @@ public:
     inline void setLayer(unsigned char l) { layer = l; }
     inline unsigned char getLayer() const { return layer; }
 
-    // vraag 26: friend function + vraag 29: const reference (2)
+    // vraag 26 + vraag 29: friend function uses const reference parameter
     friend QString inspectShape(const Shape& s);
 
 protected:
@@ -40,4 +42,3 @@ protected:
 } // namespace oop
 
 #endif // SHAPE_H
-
