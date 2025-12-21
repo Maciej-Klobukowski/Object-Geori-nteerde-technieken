@@ -2,6 +2,7 @@
 #define SHAPE_H
 
 #include <QString>
+#include <utility> // std::move
 
 namespace oop {
 
@@ -13,7 +14,13 @@ public:
 
     QString describe(bool includeType = true) const;
 
-    inline void setName(const QString& n) { name = n; }
+    /*
+     * vraag 34: 2 useful (modern) call-by-references
+     * Overloads met rvalue reference (QString&&) om temporaries efficiënt over te nemen.
+     */
+    inline void setName(const QString& n) { name = n; }                // bestaande const&
+    inline void setName(QString&& n) { name = std::move(n); }          // #1 modern call-by-reference
+
     inline const QString& getName() const { return name; }
 
     inline void setVisible(bool v) { visible = v; }
@@ -25,7 +32,6 @@ public:
     inline void setLayer(unsigned char l) { layer = l; }
     inline unsigned char getLayer() const { return layer; }
 
-    // vraag 31: useful bool getters/setters
     inline void setSelected(bool v) { selected = v; }
     inline bool isSelected() const { return selected; }
 
@@ -43,12 +49,11 @@ public:
 protected:
     QString name;
 
-    // vraag 31: 4 useful bool member variables
-    bool visible     = true;   // zichtbaar in UI
-    bool selected    = false;  // geselecteerd door gebruiker
-    bool locked      = false;  // niet bewerkbaar
-    bool highlighted = false;  // visuele highlight
-    bool dirty       = false;  // moet opnieuw getekend worden
+    bool visible     = true;
+    bool selected    = false;
+    bool locked      = false;
+    bool highlighted = false;
+    bool dirty       = false;
 
     unsigned char opacity = 255;
     unsigned char layer = 0;

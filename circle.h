@@ -2,6 +2,7 @@
 #define CIRCLE_H
 
 #include "shape.h"
+#include <utility> // std::move
 
 namespace oop {
 
@@ -10,18 +11,26 @@ public:
     Circle() : Circle(10, "Circle") {}
     Circle(int r) : Circle(r, "Circle") {}
 
-    // vraag 29: const reference (3)
     Circle(int r, const QString& customName)
         : Shape(), radius(r)
     {
         setName(customName);
     }
 
+    /*
+     * vraag 34: 2 useful (modern) call-by-references
+     * Overload met rvalue reference zodat je bv. Circle(10, QString("X")) kan doen zonder copy.
+     */
+    Circle(int r, QString&& customName)   // #2 modern call-by-reference
+        : Shape(), radius(r)
+    {
+        setName(std::move(customName));
+    }
+
     Circle(const Circle& other)
         : Circle(other.radius, other.getName())
     {}
 
-    // vraag 29: const reference (4)
     Circle(const Circle& other, const QString& newName)
         : Shape(other), radius(other.radius)
     {
