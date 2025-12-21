@@ -3,11 +3,15 @@
 namespace oop {
 
 QString inspectShape(const Shape& s) {
-    return QString("Shape[name=%1, visible=%2, opacity=%3, layer=%4]")
-    .arg(s.name)
+    return QString(
+               "Shape[name=%1, visible=%2, selected=%3, locked=%4, highlighted=%5, dirty=%6]"
+               )
+        .arg(s.name)
         .arg(s.visible ? "true" : "false")
-        .arg(s.opacity)
-        .arg(s.layer);
+        .arg(s.selected ? "true" : "false")
+        .arg(s.locked ? "true" : "false")
+        .arg(s.highlighted ? "true" : "false")
+        .arg(s.dirty ? "true" : "false");
 }
 
 QString Shape::describe(bool includeType) const {
@@ -15,16 +19,12 @@ QString Shape::describe(bool includeType) const {
         return "Shape is hidden";
     }
 
-    QString result;
-    if (includeType) {
-        result = "Shape name: " + name;
-    } else {
-        result = name;
-    }
+    QString result = includeType ? "Shape name: " + name : name;
 
-    result += QString(" (opacity=%1, layer=%2)")
-                  .arg(opacity)
-                  .arg(layer);
+    if (selected)    result += " [selected]";
+    if (locked)      result += " [locked]";
+    if (highlighted) result += " [highlighted]";
+    if (dirty)       result += " [dirty]";
 
     return result;
 }
