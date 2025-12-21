@@ -14,10 +14,7 @@ class MainWindow : public QMainWindow {
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
-    // vraag 30: const references for functions (return const reference)
-    inline const oop::Circle& circleRef() const { return circle; }      // #3
-    inline const oop::Rectangle& rectRef() const { return rect; }       // #4
+    ~MainWindow(); // vraag 32: destructor to clean up dynamic memory
 
 private slots:
     void drawCircle();
@@ -28,8 +25,8 @@ private:
 
     void drawShape(oop::Shape* s);
 
-    oop::Circle circle;
-    oop::Rectangle rect;
+    // vraag 32: dynamic memory allocation (new)
+    oop::Shape* dynamicShape;
 };
 
 #endif // MAINWINDOW_H
