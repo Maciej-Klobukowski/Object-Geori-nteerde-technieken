@@ -2,7 +2,8 @@
 #define SHAPE_H
 
 #include <QString>
-#include <utility> // std::move
+#include <QStringBuilder> // vraag 35: string class usage (%)
+#include <utility>
 
 namespace oop {
 
@@ -14,12 +15,8 @@ public:
 
     QString describe(bool includeType = true) const;
 
-    /*
-     * vraag 34: 2 useful (modern) call-by-references
-     * Overloads met rvalue reference (QString&&) om temporaries efficiënt over te nemen.
-     */
-    inline void setName(const QString& n) { name = n; }                // bestaande const&
-    inline void setName(QString&& n) { name = std::move(n); }          // #1 modern call-by-reference
+    inline void setName(const QString& n) { name = n; }
+    inline void setName(QString&& n) { name = std::move(n); }
 
     inline const QString& getName() const { return name; }
 
