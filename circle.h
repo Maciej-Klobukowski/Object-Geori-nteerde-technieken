@@ -35,7 +35,7 @@ public:
         setName(newName);
     }
 
-    ~Circle() {}
+
     QString draw() const override {
         return QString("Drawing a Circle with radius %1").arg(radius);
     }

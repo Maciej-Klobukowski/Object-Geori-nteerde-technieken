@@ -35,13 +35,11 @@ public:
         setName(newName);
     }
 
-    ~Rectangle() {}
 
     QString draw() const override {
         return QString("Drawing a Rectangle %1x%2")
         .arg(width).arg(height);
     }
-
 
     // ✅ useful getters & setters
     int getWidth() const { return width; }
