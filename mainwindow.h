@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
+#include <QVector> // vraag 36: useful container class
 
 #include "circle.h"
 #include "rectangle.h"
@@ -19,17 +20,24 @@ public:
 private slots:
     void drawCircle();
     void drawRectangle();
-
-    // vraag 33: explicit dynamic memory removing
     void clearShape();
+
+    // vraag 36: use container class (iterate over multiple shapes)
+    void drawAllShapes();
 
 private:
     QLabel* label;
 
     void drawShape(oop::Shape* s);
 
-    // vraag 32 + 33: dynamically allocated object
     oop::Shape* dynamicShape;
+
+    /*
+     * vraag 36: useful container class
+     * QVector<oop::Shape*> houdt meerdere shapes bij om erover te itereren.
+     * Dit is nuttig om "Draw All" te kunnen doen.
+     */
+    QVector<oop::Shape*> shapeList;
 };
 
 #endif // MAINWINDOW_H
