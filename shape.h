@@ -3,8 +3,10 @@
 
 #include <QString>
 
+namespace oop {
+
 /*
- * vraag 10: abstract base class
+ * vraag 27: everything in a self-made namespace
  */
 class Shape {
 public:
@@ -20,16 +22,14 @@ public:
     inline void setVisible(bool v) { visible = v; }
     inline bool isVisible() const { return visible; }
 
-    /*
-     * vraag 26: useful friend function
-     * Deze functie krijgt toegang tot protected/private members
-     * voor logging/debugging zonder getters te misbruiken.
-     */
+    // vraag 26: friend function
     friend QString inspectShape(const Shape& s);
 
 protected:
     QString name;
     bool visible = true;
 };
+
+} // namespace oop
 
 #endif // SHAPE_H
