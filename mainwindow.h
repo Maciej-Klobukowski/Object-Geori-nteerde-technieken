@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QVector>
 #include <QFutureWatcher>
-#include <QTimer>   // vraag 42: useful Qt class
+#include <QTimer>
 
 #include "circle.h"
 #include "rectangle.h"
@@ -19,6 +19,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    /*
+     * vraag 43: useful usage of signals/slots
+     * Wordt uitgezonden wanneer de actieve shape verandert.
+     */
+    void shapeChanged(const QString& description);
+
 private slots:
     void drawCircle();
     void drawRectangle();
@@ -26,7 +33,9 @@ private slots:
     void drawAllShapes();
     void saveLogToFileAsync();
 
-    // vraag 42: Qt class usage
+    // vraag 43: slot dat reageert op shapeChanged
+    void updateStatusLabel(const QString& text);
+
     void clearStatusMessage();
 
 private:
@@ -38,8 +47,6 @@ private:
     QVector<oop::Shape*> shapeList;
 
     QFutureWatcher<bool> saveWatcher;
-
-    // vraag 42: useful Qt class
     QTimer statusTimer;
 };
 
