@@ -3,33 +3,39 @@
 
 #include "shape.h"
 
-
-//Vraag 8 useful and correct object composition
-
 /*
- * OBJECT COMPOSITION:
- * DrawingTool HAS A Shape pointer.
- * This shows useful and correct composition, because DrawingTool depends on a
- * Shape to perform its work, rather than extending Shape.
+ * vraag 8: useful and correct object composition
+ * DrawingTool HAS-A Shape pointer.
  *
- * Composition is used instead of inheritance because a DrawingTool is NOT a Shape,
- * but it USES Shape objects. This is the correct design choice.
+ * vraag 18: useful proven (dynamic) polymorphism
+ * performDraw() roept virtuele draw() aan via Shape*.
  */
 class DrawingTool {
 public:
-    // Inject a shape instance (composition)
     DrawingTool(Shape* s) : shape(s) {}
 
-    /*
-     * Delegates the draw task to the composed Shape object.
-     * This also triggers polymorphism.
-     */
     QString performDraw() const {
         return shape->draw();
     }
 
 private:
-    Shape* shape; // Composition: part-of relationship
+    Shape* shape;
 };
+
+/*
+ * vraag 25: useful template function
+ *
+ * Deze template werkt voor ELKE Shape-subclass (Circle, Rectangle, ...)
+ * zonder code duplicatie.
+ *
+ * De template is nuttig omdat:
+ * - hij type-veilig is
+ * - hij werkt voor alle Shape types
+ * - hij herbruikbaar is
+ */
+template <typename T>
+QString drawTemplate(const T& shape) {
+    return shape.draw();
+}
 
 #endif // DRAWINGTOOL_H
