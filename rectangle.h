@@ -42,6 +42,14 @@ public:
         .arg(width).arg(height);
     }
 
+
+    // ✅ useful getters & setters
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+
+    void setWidth(int w) { width = w; }
+    void setHeight(int h) { height = h; }
+
 private:
     int width;
     int height;

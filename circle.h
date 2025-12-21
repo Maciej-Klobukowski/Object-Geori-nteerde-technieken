@@ -36,10 +36,13 @@ public:
     }
 
     ~Circle() {}
-
     QString draw() const override {
         return QString("Drawing a Circle with radius %1").arg(radius);
     }
+
+    // ✅ useful getter & setter
+    int getRadius() const { return radius; }
+    void setRadius(int r) { radius = r; }
 
 private:
     int radius;
