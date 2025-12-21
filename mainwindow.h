@@ -5,8 +5,8 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QVector>
-
-#include <QFutureWatcher>   // vraag 41: threads (watch async task)
+#include <QFutureWatcher>
+#include <QTimer>   // vraag 42: useful Qt class
 
 #include "circle.h"
 #include "rectangle.h"
@@ -24,9 +24,10 @@ private slots:
     void drawRectangle();
     void clearShape();
     void drawAllShapes();
+    void saveLogToFileAsync();
 
-    void saveLogToFile();          // bestaat al
-    void saveLogToFileAsync();     // vraag 41: threaded version
+    // vraag 42: Qt class usage
+    void clearStatusMessage();
 
 private:
     QLabel* label = nullptr;
@@ -36,9 +37,10 @@ private:
     oop::Shape* dynamicShape = nullptr;
     QVector<oop::Shape*> shapeList;
 
-    // vraag 41: useful usage of threads
-    // Watcher voor QtConcurrent task (runs in thread pool)
     QFutureWatcher<bool> saveWatcher;
+
+    // vraag 42: useful Qt class
+    QTimer statusTimer;
 };
 
 #endif // MAINWINDOW_H

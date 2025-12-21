@@ -5,9 +5,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QTextStream>
-
-#include <QtConcurrent/QtConcurrentRun> // vraag 41: threads (QtConcurrent::run)
-
+#include <QtConcurrent/QtConcurrentRun>
 #include <stdexcept>
 #include <new>
 
@@ -29,16 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton* btnAll = new QPushButton("Draw All", this);
     connect(btnAll, &QPushButton::clicked, this, &MainWindow::drawAllShapes);
 
-    /*
-     * vraag 41: useful usage of threads
-     * "Save Log (Async)" start file-I/O in a background thread so UI stays responsive.
-     */
     QPushButton* btnSaveAsync = new QPushButton("Save Log (Async)", this);
     connect(btnSaveAsync, &QPushButton::clicked, this, &MainWindow::saveLogToFileAsync);
 
-    /*
-     * vraag 40: lambda (blijft nuttig)
-     */
     QPushButton* btnInfo = new QPushButton("Show Info", this);
     connect(btnInfo, &QPushButton::clicked, this, [this]() {
         if (dynamicShape != nullptr) {
@@ -46,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
         } else {
             label->setText("No dynamic shape available");
         }
+        statusTimer.start(); // vraag 42: timer starten
     });
 
     label = new QLabel("Click a button...", this);
@@ -53,10 +45,17 @@ MainWindow::MainWindow(QWidget *parent)
     shapeList.append(&circle);
     shapeList.append(&rect);
 
-    // vraag 41: wanneer background save klaar is -> UI update op main thread
+    /*
+     * vraag 42: useful Qt class (QTimer)
+     * Wordt gebruikt om statusberichten automatisch te wissen na 3 seconden.
+     */
+    statusTimer.setSingleShot(true);
+    statusTimer.setInterval(3000); // 3 seconden
+    connect(&statusTimer, &QTimer::timeout, this, &MainWindow::clearStatusMessage);
+
     connect(&saveWatcher, &QFutureWatcher<bool>::finished, this, [this]() {
-        const bool ok = saveWatcher.result();
-        label->setText(ok ? "Saved log (async)" : "Async save failed");
+        label->setText(saveWatcher.result() ? "Saved log (async)" : "Async save failed");
+        statusTimer.start(); // auto-clear message
     });
 }
 
@@ -67,35 +66,14 @@ MainWindow::~MainWindow() {
     }
 }
 
-void MainWindow::drawShape(oop::Shape* s) {
-    if (s == nullptr) {
-        label->setText("No shape to draw");
-        return;
-    }
-    oop::DrawingTool tool(s);
-    label->setText(tool.performDraw());
+/*
+ * vraag 42: QTimer slot
+ * Wordt automatisch aangeroepen na timeout.
+ */
+void MainWindow::clearStatusMessage() {
+    label->clear();
 }
 
-void MainWindow::clearShape() {
-    if (dynamicShape != nullptr) {
-        delete dynamicShape;
-        dynamicShape = nullptr;
-        label->setText("Shape deleted");
-    } else {
-        label->setText("No shape to delete");
-    }
-}
-
-void MainWindow::drawCircle() {
-    clearShape();
-    try {
-        dynamicShape = new oop::Circle(25, "Dynamic Circle");
-        drawShape(dynamicShape);
-    } catch (const std::bad_alloc&) {
-        dynamicShape = nullptr;
-        label->setText("Out of memory while creating Circle");
-    }
-}
 
 void MainWindow::drawRectangle() {
     clearShape();
